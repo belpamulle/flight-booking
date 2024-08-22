@@ -20,10 +20,10 @@ public class StringSequenceIdGenerator implements IdentifierGenerator, Configura
       SharedSessionContractImplementor session, Object obj) 
       throws HibernateException {
  
-        String query = String.format("select %s from %s", 
-            session.getEntityPersister(obj.getClass().getName(), obj)
-              .getIdentifierPropertyName(),
-            obj.getClass().getSimpleName());
+        String query = "select %s from %s".formatted(
+				session.getEntityPersister(obj.getClass().getName(), obj)
+						.getIdentifierPropertyName(),
+				obj.getClass().getSimpleName());
  
         Stream<String> ids = session.createQuery(query).stream();
  

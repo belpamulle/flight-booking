@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
-@ComponentScan(basePackages = { "com.dxbair.services.flightbooking" })
+@SpringBootApplication(scanBasePackages = { "com.dxbair.services.flightbooking" })
 @EnableTransactionManagement
 public class Application {
 
