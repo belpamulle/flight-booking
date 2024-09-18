@@ -3,11 +3,11 @@ package com.dxbair.services.flightbooking.domain.entity;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -19,15 +19,18 @@ public class Flight {
 
 	@Id
 	@GeneratedValue(generator = "flight-id-gen")
-	@GenericGenerator(name = "flight-id-gen", 
-		parameters = @Parameter(name = "prefix", value = "FL"), 
-		strategy = "com.dxbair.services.flightbooking.domain.util.StringSequenceIdGenerator")
+	@GenericGenerator(
+			name = "flight-id-gen",
+			parameters = @Parameter(name = "prefix", value = "FL"),
+			strategy = "com.dxbair.services.flightbooking.domain.util.StringSequenceIdGenerator"
+	)
 	private String id;
+
 	private String departure;
 	private String arrival;
 	private LocalDateTime departureDate;
 	private LocalDateTime arrivalDate;
-	
+
 	@ManyToMany(mappedBy = "flights", fetch = FetchType.LAZY)
 	private Set<FlightBooking> bookings;
 
@@ -95,8 +98,9 @@ public class Flight {
 
 	@Override
 	public String toString() {
-		return "Flight [id=" + id + ", departure=" + departure + ", arrival=" + arrival + ", departureDate="
-				+ departureDate + ", arrivalDate=" + arrivalDate + "]";
+		return """
+                Flight [id=%s, departure=%s, arrival=%s, departureDate=%s, arrivalDate=%s]
+                """.formatted(id, departure, arrival, departureDate, arrivalDate);
 	}
 
 }

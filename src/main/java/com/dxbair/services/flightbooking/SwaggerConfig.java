@@ -5,34 +5,33 @@ import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import org.springdoc.core.models.GroupedOpenApi;
+
 
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     @Bean
-    public Docket bookingApi() {
-    	return new Docket(DocumentationType.SWAGGER_2)          
-    		      .select()                                       
-    		      .apis(RequestHandlerSelectors.basePackage("com.dxbair.services.flightbooking"))
-    		      .paths(PathSelectors.ant("/**"))                     
-    		      .build().apiInfo(apiInfo());
+    public GroupedOpenApi bookingApi() {
+        String paths[] = {"/**"};
+        return GroupedOpenApi.builder()
+                .group("flight-booking")
+                .pathsToMatch(paths)
+                .build();
     }
-    
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-          "Flight Booking REST API", 
-          "Flight Booking REST API Documentatoion", 
-          "API TOS", 
-          "Terms of service", 
-          new Contact("Shameer Kunjumohamed", "www.sameerean.com", "sameerean@gmail.com"), 
-          "License of API", "API license URL", Collections.emptyList());
-   }
+
+    @Bean
+    public OpenAPI apiInfo() {
+        return new OpenAPI()
+                .info(new Info().title("Flight Booking REST API")
+                        .description("Flight Booking REST API Documentation")
+                        .version("v0.0.1")
+                        .license(new License().name("API License").url("https://www.example.com/license"))
+                        .contact(new Contact().name("Shameer Kunjumohamed").email("sameerean@gmail.com").url("https://www.sameerean.com")));
+    }
+
 }
